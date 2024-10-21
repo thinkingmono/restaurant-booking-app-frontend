@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Wrapper from "../assets/wrappers/RegisterPage"
 import imgBck from '../assets/images/cima-gourmet.jpg'
-import { preferences } from '../utils/preferences';
+import { preferences } from '../utils/data';
 
 
 const initialState: UserType = {

@@ -1,5 +1,5 @@
 import customFetch, { checkForUnauthorizedResponse } from "../../utils"
-import { preferences } from "../../utils/preferences";
+import { preferences } from "../../utils/data";
 import { UserType, UserUpdateType } from "../../utils/types";
 
 export const registerUserThunk = async (user: UserType, thunkAPI: {}) => {

@@ -12,18 +12,20 @@ function Profile() {
   const [userData, setUserData] = useState({
     name: user?.name || '',
     email: user?.email || '',
+    nickname: user?.nickname || '',
+    phone: user?.phone || '',
     location: user?.location || '',
     preferences: [...user?.preferences]
   })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { name, email, location, preferences } = userData;
+    const { name, email, nickname, phone, location, preferences } = userData;
     if (!name || !email) {
       toast.error('Please fill out all fields');
       return;
     }
-    dispatch(updateUser({ name, email, location, preferences }));
+    dispatch(updateUser({ name, email, location, nickname, phone, preferences }));
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,11 +49,15 @@ function Profile() {
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
         <h2>Perfíl</h2>
-        <div className="form-center">
+        <div className="profile-information">
           {/*Name Field*/}
           <FormRow type='text' name='name' labelText='Nombre' value={userData.name} onChange={handleChange} />
           {/*Email Field*/}
           <FormRow type='email' name='email' value={userData.email} onChange={handleChange} />
+          {/*Nick Field*/}
+          <FormRow type='text' name='nickname' value={userData.nickname || ''} onChange={handleChange} />
+          {/*Phone Field*/}
+          <FormRow type='tel' name='phone' value={userData.phone || ''} onChange={handleChange} />
           {/*Location Field*/}
           <FormRow type='text' name='location' labelText='Ciudad' value={userData.location} onChange={handleChange} />
           {/*Preferences*/}

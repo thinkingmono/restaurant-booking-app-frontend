@@ -1,7 +1,5 @@
-import { IoStorefrontOutline } from "react-icons/io5";
-import { IoCalendarOutline } from "react-icons/io5";
+import { IoStorefrontOutline, IoCalendarOutline, IoRestaurantOutline } from "react-icons/io5";
 import { MdOutlineTableRestaurant } from "react-icons/md";
-import { IoRestaurantOutline } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 
 const links = [
@@ -31,7 +29,7 @@ const links = [
     },
     {
         id: 5,
-        text: 'Profile',
+        text: 'Perfil',
         path: '/profile',
         icon: <FaUserCircle />
     }

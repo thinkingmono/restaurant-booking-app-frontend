@@ -29,6 +29,11 @@ const Wrapper = styled.section`
       color: var(--primary-title);
     }
   }
+  .profile-information{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
   .form-row {
     margin-bottom: 0;
   }
@@ -53,12 +58,111 @@ const Wrapper = styled.section`
     margin-bottom: 5px
   }
   .preference label{
-      line-height: 1.5;
+    line-height: 1.5;
   }
-  .form-center {
+
+  .booking-user-info{
+    margin-bottom: 2rem;
+  }
+  
+  .user-data-container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.75rem;
+  }
+
+  .table-selection-section, .table-preferences{
+    margin-bottom: 2rem;
+  }
+
+  .preferences-fields-container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.75rem;
+  }
+
+  .results-container{
     display: grid;
-    row-gap: 1rem;
+    gap: 1rem;
+    margin: 1rem auto;
   }
+
+  .table-card {
+    background-color: #fafafa;
+    border: 2px solid transparent;
+    box-shadow: var(--shadow-2);
+    border-radius: var(--borderRadius);
+    transition: var(--transition);
+
+    .img-container {
+      position: relative;
+      overflow: hidden;
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.35);
+        z-index: 1;
+      }
+
+      .zone-tag {
+        position: absolute;
+        top: 0.625rem;
+        right: 0.625rem;
+        z-index: 2;
+        background: var(--primary-btn);
+        color: var(--white);
+        padding: 0.15rem 0.875rem;
+        box-shadow: var(--shadow-2);
+        border-radius: var(--borderRadius);
+      }
+    }
+
+    .table-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      row-gap: 0.5rem;
+      padding: 0.75rem 0.5rem;
+      color: var(--black);
+
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 0.25rem;
+      }
+
+      .btn {
+        width: 100%;
+        margin-top: 0;
+      }
+    }
+  }
+  
+  .table-card-container{
+    h4{
+      text-align: center;
+    }
+  }
+
+  .table-card:hover {
+    border: 2px solid var(--primary-btn);
+    box-shadow: var(--shadow-4);
+  }
+
+  .table-card img {
+    transform: scale(1);
+    transition: var(--transition);
+  }
+
+  .table-card:hover img {
+    transform: scale(1.1);
+  }
+
   .form-center button {
     align-self: end;
     height: 35px;
@@ -81,86 +185,102 @@ const Wrapper = styled.section`
     background: var(--black);
   }
 
-  .sets-form{
-    margin-top: 2rem
-  }
-
-  .chart-container{
-    margin-top: 2rem;
-    width: 100%;
-    height: 400px;
-  }
-
-  .sets-records-container, .weight-records-container{
-    margin-top: 2rem;
-    overflow-x: scroll
-  }
-
-  .sets-records, .weight-records{
-    min-width: 750px;
-    padding: 15px;
-    background-color: var(--backgroundColor);
-    border-radius: var(--borderRadius);
-  }
-
-  .sets-headers, .set-record{
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  .weight-headers, .weight-record{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .no-sets-notification{
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  .set-actions{
-    display: flex;
-    align-items: center;
-    justify-content: begin;
-    column-gap: 15px;
-    .icon{
-      background-color: transparent;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
+  @media (min-width: 640px) {
+    .user-data-container{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 1rem;
     }
-    .delete-icon{
-      color: var(--red-dark);
-      padding: 0;
-      cursor: pointer;
+
+    .booking-user-info{
+      padding: 3% 2%;
+      margin-bottom: 1.25rem;
+      border: 1px dashed var(--primary-btn);
     }
-    .edit-icon, .view-icon{
-      color: var(--primary-700);
+
+    .table-selection-section{
+      padding: 3% 2%;
+      margin-bottom: 1.25rem;
+      border: 1px dashed var(--primary-btn);
+    }
+
+    .results-container{
+      grid-column: 1 / 3;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .preferences-fields-container{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 1rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .profile-information{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      .preferences-container{
+        grid-column: 1 / 4;
+        .preferences{
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    }
+
+    .table-preferences{
+      grid-column: 1/4;
     }
   }
 
   @media (min-width: 992px) {
-    .form-center {
-      grid-template-columns: repeat(2, 1fr);
-      align-items: center;
-      column-gap: 1rem;
-    }
-    .preferences-container{
-      grid-column: 1/4;
-    }
-    .preferences{
-      grid-template-columns: repeat(5, 1fr);
-    }
-    .sets-records-container, .weight-records-container{
-      overflow-x: hidden
+    .profile-information{
+      .preferences-container{
+        .preferences{
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
     }
   }
-  @media (min-width: 1120px) {
-    .form-center {
-      grid-template-columns: repeat(3, 1fr);
+  
+  @media (min-width: 1024px) {
+    .profile-information{
+      .preferences-container{
+        .preferences{
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
     }
-    .form-center button {
-      margin-top: 0;
+    
+    .table-selection-section{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .table-preferences{
+      grid-column: 1 / 2;
+    }
+
+    .preferences-fields-container{
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    .table-card-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .table-card{
+      height: 100%;
+      width: 90%;
+    }
+
+    .results-container{
+      display: grid;
+      grid-column: 1 / 4;
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 `

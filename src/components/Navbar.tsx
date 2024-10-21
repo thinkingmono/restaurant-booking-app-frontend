@@ -27,7 +27,7 @@ function Navbar() {
           <button type="button" className='btn' onClick={() => setShowLogout(!showLogout)}><FaUserCircle className='icon'/>{user.name.split(' ')[0]}<FaCaretDown /></button>
           <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
             <span>{user.name}</span>
-            <Link to='/profile' className='dropdown-btn' onClick={() => setShowLogout(!showLogout)}>Profile</Link>
+            <Link to='/profile' className='dropdown-btn' onClick={() => setShowLogout(!showLogout)}>Perfil</Link>
             <button type="button" className='dropdown-btn' onClick={() => dispatch(clearStore('Logging out...'))}>Logout</button>
           </div>
         </div>

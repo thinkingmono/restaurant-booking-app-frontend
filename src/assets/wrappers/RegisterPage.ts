@@ -46,6 +46,8 @@ const Wrapper = styled.section`
       border: 1px dashed var(--primary-title);
       h3 {
         text-align: center;
+        font-size: 2.2rem;
+        color: var(--black);
       }
       p {
         margin: 0;

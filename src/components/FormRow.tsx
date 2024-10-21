@@ -1,11 +1,4 @@
-type FormRowType = {
-  labelText?: string
-  name: string
-  type: string
-  value: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  disabled?: boolean
-}
+import { FormRowType } from '../utils/types';
 
 function FormRow({ labelText, name, type, value, onChange, disabled }: FormRowType) {
   return (
