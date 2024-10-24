@@ -1,10 +1,9 @@
 import axios from "axios";
 
-// const serverUrl = process.env.REACT_APP_SERVER;
+const serverUrl = import.meta.env.VITE_APP_SERVER;
 
 const customFetch = axios.create({
-  // baseURL: `${serverUrl}`
-  baseURL: ``
+  baseURL: `${serverUrl}`
 })
 
 export const checkForUnauthorizedResponse = (error: { response: { status: number, data: { msg: string } } }, thunkAPI) => {

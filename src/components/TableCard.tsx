@@ -1,4 +1,4 @@
-import { IoPeopleOutline, IoTimeOutline, IoTodayOutline } from "react-icons/io5";
+import { IoPeopleOutline, IoTimeOutline, IoTodayOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 import { MdOutlineTableRestaurant } from "react-icons/md";
 import { TableType } from "../utils/types";
 import vipImg from '../assets/images/cima-gourmet-vip.jpg'
@@ -21,7 +21,7 @@ function TableCard({ table, onClick }: { table: TableType, onClick: () => void }
         <span><IoTodayOutline /> {table.book_date}</span>
         <span><IoTimeOutline /> {table.book_hour}</span>
         <span><IoPeopleOutline /> {table.guests}</span>
-        <button type="button" className="btn" onClick={onClick}>Seleccionar</button>
+        <span className="availability-check-tag"><IoCheckmarkCircleOutline /> {table.status === 'Available' && 'Disponible'}</span>
       </div>
     </article>
   )

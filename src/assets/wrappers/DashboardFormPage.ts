@@ -71,7 +71,7 @@ const Wrapper = styled.section`
     row-gap: 0.75rem;
   }
 
-  .table-selection-section, .table-preferences{
+  .table-selection-section, .table-preferences, .order-selection-section{
     margin-bottom: 2rem;
   }
 
@@ -87,7 +87,7 @@ const Wrapper = styled.section`
     margin: 1rem auto;
   }
 
-  .table-card {
+  .table-card, .dish-card {
     background-color: #fafafa;
     border: 2px solid transparent;
     box-shadow: var(--shadow-2);
@@ -119,6 +119,36 @@ const Wrapper = styled.section`
         box-shadow: var(--shadow-2);
         border-radius: var(--borderRadius);
       }
+      .category-tag{
+        position: absolute;
+        top: 0.625rem;
+        left: 0.625rem;
+        z-index: 2;
+        background: var(--primary-btn);
+        color: var(--white);
+        padding: 0.15rem 0.875rem;
+        box-shadow: var(--shadow-2);
+        border-radius: var(--borderRadius);
+      }
+      
+      .add-to-order-btn{
+        position: absolute;
+        top: 0.625rem;
+        right: 0.625rem;
+        z-index: 2;
+        background-color: var(--primary-btn);
+        font-size: 1rem;
+        color: var(--white);
+        padding: 0.4rem 0.75rem;
+        border: 1px solid var(--white);
+        box-shadow: var(--shadow-2);
+        border-radius: var(--borderRadius);
+        transition: var(--transition);
+      }
+      
+      .add-to-order-btn:hover{
+        background-color: var(--black);
+      }
     }
 
     .table-info {
@@ -136,38 +166,114 @@ const Wrapper = styled.section`
         column-gap: 0.25rem;
       }
 
-      .btn {
+      .availability-check-tag{
         width: 100%;
-        margin-top: 0;
+        background-color: var(--black);
+        border-radius: var(--borderRadius);
+        color: var(--grey);
+        padding: 5px 10px;
+        font-weight: 600;
+        svg{
+          color: var(--primary-btn);
+        }
+      }
+    }
+    
+    .dish-info{
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.4rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.75rem 0.5rem;
+      h4{
+        text-align: center;
+        color: var(--black);
+        margin-bottom: 0;
+      }
+      .dish-price{
+        color: var(--primary-btn);
+        font-size: 1rem;
       }
     }
   }
-  
+
   .table-card-container{
     h4{
       text-align: center;
     }
   }
 
-  .table-card:hover {
+  .table-card:hover, .dish-card:hover {
     border: 2px solid var(--primary-btn);
     box-shadow: var(--shadow-4);
   }
 
-  .table-card img {
+  .table-card img, .dish-card img{
     transform: scale(1);
     transition: var(--transition);
   }
 
-  .table-card:hover img {
+  .table-card:hover img, .dish-card:hover img{
     transform: scale(1.1);
   }
 
-  .form-center button {
-    align-self: end;
-    height: 35px;
-    margin-top: 1rem;
+  .dishes-filters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+    .filter-section-title{
+      margin-bottom: 1.38rem;
+      border-bottom: 1px dashed var(--primary-btn);
+      h4{
+        margin-bottom: 0;
+      }
+      .filters-toggle-btn{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        color: var(--primary-btn);
+        font-size: 1rem;
+        cursor: pointer;
+      }
+    }
   }
+
+  .categories-filters, .preferences-filters{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    margin-bottom: 1.38rem;
+    height: 0;
+    overflow: hidden;
+    padding: 0 1rem;
+    .filter-btn{
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      text-align: left;
+      color: var(--grey-900);
+      font-weight: 300;
+      cursor: pointer;
+    }
+    .filter-btn:hover{
+      color: var(--primary-btn);
+    }
+  }
+  .show{
+    height: auto;
+  }
+
+  .dishes-results{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
   .btn-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -192,13 +298,7 @@ const Wrapper = styled.section`
       column-gap: 1rem;
     }
 
-    .booking-user-info{
-      padding: 3% 2%;
-      margin-bottom: 1.25rem;
-      border: 1px dashed var(--primary-btn);
-    }
-
-    .table-selection-section{
+    .booking-user-info, .table-selection-section, .order-selection-section{
       padding: 3% 2%;
       margin-bottom: 1.25rem;
       border: 1px dashed var(--primary-btn);
@@ -212,6 +312,9 @@ const Wrapper = styled.section`
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       column-gap: 1rem;
+    }
+    .dishes-results{
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
@@ -277,10 +380,33 @@ const Wrapper = styled.section`
       width: 90%;
     }
 
-    .results-container{
+    .dish-card{
+      height: 100%;
+      width: 100%;
+    }
+  }
+  
+  @media (min-width: 1280px){
+    .order-selection-container{
       display: grid;
-      grid-column: 1 / 4;
+      grid-template-columns: 200px 1fr;
+      gap: 1.4rem;
+    }
+    .dishes-results{
       grid-template-columns: repeat(3, 1fr);
+    }
+    .dishes-filters{
+      display: flex;
+      flex-direction: column;
+      background-color: var(--black-2);
+      padding: 0.75rem;
+      border-radius: var(--borderRadius);
+    }
+  }
+  
+  @media (min-width: 1536px){
+    .dishes-results{
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 `
