@@ -136,10 +136,13 @@ const Wrapper = styled.section`
         top: 0.625rem;
         right: 0.625rem;
         z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: var(--primary-btn);
         font-size: 1rem;
         color: var(--white);
-        padding: 0.4rem 0.75rem;
+        padding: 0.5rem;
         border: 1px solid var(--white);
         box-shadow: var(--shadow-2);
         border-radius: var(--borderRadius);
@@ -260,7 +263,7 @@ const Wrapper = styled.section`
       font-weight: 300;
       cursor: pointer;
     }
-    .filter-btn:hover{
+    .filter-btn:hover, .filter-btn.active{
       color: var(--primary-btn);
     }
   }

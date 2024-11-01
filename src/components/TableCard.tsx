@@ -6,7 +6,7 @@ import generalImg from '../assets/images/cima-gourmet-general.jpg'
 import jardinImg from '../assets/images/cima-gourmet-jardin.jpg'
 import barraImg from '../assets/images/cima-gourmet-barra.jpg'
 
-function TableCard({ table, onClick }: { table: TableType, onClick: () => void }) {
+function TableCard({ table }: { table: TableType }) {
   const cardImage = table.book_zone === 'VIP' ? vipImg : table.book_zone === 'General' ? generalImg : table.book_zone === 'Jardín' ? jardinImg : '';
 
   return (

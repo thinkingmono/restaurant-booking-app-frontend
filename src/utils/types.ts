@@ -85,3 +85,16 @@ export type FormRowDateType = {
   max?: string,
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
+
+export type CategoryType = {
+  category_id: string
+  category_name: string
+}
+
+export type DishType = {
+  dish_id: string
+  dish_name: string
+  dish_img: string
+  dish_category: string
+  dish_price: number
+}
