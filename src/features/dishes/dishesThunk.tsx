@@ -27,6 +27,7 @@ export const filterByCategoryThunk = async (category: string, thunkAPI: {}) => {
         dish_img: dish.strMealThumb,
         dish_category: category,
         dish_price: 100000,
+        dish_qty: 1
       }
     })
     return { defaultDishes: defaultDishes.slice(0, 10) }

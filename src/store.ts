@@ -2,8 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/user/userSlice'
 import tableReducer from './features/table/tableSlice'
 import tablesReducer from './features/tables/tablesSlice'
-import filtersReducer from './features/filters/filtersSlice'
 import dishesReducer from './features/dishes/dishesSlice'
+import orderReducer from './features/order/orderSlice'
+import bookingsReducer from './features/bookings/bookingsSlice'
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     table: tableReducer,
     tables: tablesReducer,
     dishes: dishesReducer,
-    filters: filtersReducer
+    order: orderReducer,
+    bookings: bookingsReducer
   }
 })
 

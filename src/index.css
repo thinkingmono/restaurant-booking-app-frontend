@@ -249,7 +249,8 @@ ul {
 
 .btn {
   font-family: var(--bodyFont);
-  font-weight: 700;
+  /* font-weight: 700; */
+  font-weight: 500;
   font-size: 0.875rem;
   cursor: pointer;
   color: var(--white);
@@ -259,7 +260,8 @@ ul {
   padding: 0.375rem 0.75rem;
   box-shadow: var(--shadow-2);
   transition: var(--transition);
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
+  text-transform: capitalize;
   display: inline-block;
 }
 
@@ -414,4 +416,8 @@ ul {
 
 .full-page {
   min-height: 100vh;
+}
+
+.Toastify{
+  text-align: center;
 }

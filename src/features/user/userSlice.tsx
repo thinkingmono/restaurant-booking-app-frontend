@@ -39,10 +39,13 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action: PayloadAction<UserState>) => {
         const { user } = action.payload;
+        // const { user: { name, email, password, preferences } } = action.payload;
         state.isLoading = false;
-        state.user = user;
-        addUserToLocalStorage(user);
-        toast.success(`¡Hola! Bienvenido a Cima Gourmet ${user.name}`);
+        // state.user = { ...state.user, name, email, password, preferences };
+        // console.log(state.user);
+        addUserToLocalStorage({ ...state.user, ...user });
+        // toast.success(`¡Hola! Bienvenido a Cima Gourmet ${state.user.name}`);
+        toast.success(`Te has registrado exitosamente`);
       })
       .addCase(registerUser.rejected, (state) => {
         state.isLoading = false;
@@ -54,13 +57,13 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<UserState>) => {
         const { user } = action.payload;
         state.isLoading = false;
-        state.user = user;
-        addUserToLocalStorage(user);
+        state.user = { ...state.user, ...user };
+        addUserToLocalStorage(state.user);
         toast.success(`¡Hola! Bienvenido de vuelta ${user.name}`);
       })
       .addCase(loginUser.rejected, (state) => {
         state.isLoading = false;
-        toast.error('Hubo un error con tu registro, intenta de nuevo más tarde');
+        toast.error('Hubo un error con tu login, intenta de nuevo más tarde');
       })
       .addCase(updateUser.pending, (state) => {
         state.isLoading = true
@@ -68,9 +71,9 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action: PayloadAction<UserState>) => {
         const { user } = action.payload;
         state.isLoading = false;
-        state.user = user;
-        addUserToLocalStorage(user);
-        toast.success(`User updated`);
+        state.user = { ...state.user, ...user };
+        addUserToLocalStorage(state.user);
+        toast.success(`Tus datos han sido guardados con éxito`);
       })
       .addCase(updateUser.rejected, (state) => {
         state.isLoading = false;

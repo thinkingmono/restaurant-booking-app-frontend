@@ -70,6 +70,30 @@ const Wrapper = styled.section`
     flex-direction: column;
     row-gap: 0.75rem;
   }
+  
+  .section-title-btn-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.76rem;
+    grid-column: 1 / 3;
+    h3{
+      margin-bottom: 0;
+    }
+    .btn-container{
+      display: flex;
+      flex-direction: row;
+      column-gap: 1rem;
+    }
+    button, a{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      column-gap: 0.5rem;
+    }
+  }
 
   .table-selection-section, .table-preferences, .order-selection-section{
     margin-bottom: 2rem;
@@ -294,6 +318,39 @@ const Wrapper = styled.section`
     background: var(--black);
   }
 
+  .booking-summary-container{
+    .user-information-container{
+      background: var(--black-2);
+      border-radius: var(--borderRadius);
+      padding: 0.75rem;
+      .user-information{
+        padding: 0 0.75rem;
+        p{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+    }
+    h4{
+      border-bottom: 1px dashed var(--primary-btn);
+      text-align: center;
+    }
+    .order-container{
+      p{
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+      }
+      .no-items{
+        text-align: center;
+      }
+    }
+  }
+
   @media (min-width: 640px) {
     .user-data-container{
       display: grid;
@@ -301,7 +358,7 @@ const Wrapper = styled.section`
       column-gap: 1rem;
     }
 
-    .booking-user-info, .table-selection-section, .order-selection-section{
+    .booking-user-info, .table-selection-section, .order-selection-section, .booking-summary-section{
       padding: 3% 2%;
       margin-bottom: 1.25rem;
       border: 1px dashed var(--primary-btn);
@@ -336,6 +393,57 @@ const Wrapper = styled.section`
 
     .table-preferences{
       grid-column: 1/4;
+    }
+
+    .order-container{
+      grid-column: 1 / 3;
+      margin-top: 2rem;
+      background: var(--black-2);
+      padding: 1.5rem;
+      border-radius: var(--borderRadius);
+      .dishes-list{
+        display: flex;
+        flex-direction: column;
+        padding: 0 0.75rem;
+        .dish-item{
+          display: grid;
+          grid-template-columns: 5rem 2fr repeat(3, 1fr) 2rem;
+          padding: 0.5rem;
+          transition: var(--transition);
+          img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 1px solid transparent;
+            border-radius: var(--borderRadius);
+            transition: var(--transition);
+          }
+          button{
+            background: transparent;
+            color: var(--primary-btn);
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0;
+          }
+        }
+        .dish-item:hover{
+          background: var(--black);
+          img{
+            border: 1px solid var(--primary-btn);
+          }
+        }
+        .dishes-list-headers{
+          display: grid;
+          grid-template-columns: 5rem 2fr repeat(3, 1fr) 2rem;
+          border-bottom: 1px solid var(--black);
+          margin-bottom: 1rem;
+          padding: 0 0.5rem;
+          p{
+            margin: 0;
+          }
+        }
+      }
     }
   }
 
@@ -386,6 +494,11 @@ const Wrapper = styled.section`
     .dish-card{
       height: 100%;
       width: 100%;
+    }
+    
+    .booking-summary-container{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
   

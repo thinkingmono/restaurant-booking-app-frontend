@@ -45,7 +45,7 @@ export type UserUpdateType = {
   email: string
   nickname: string
   phone: string
-  location: string
+  location?: string
   preferences: PreferenceType[]
 }
 
@@ -97,4 +97,20 @@ export type DishType = {
   dish_img: string
   dish_category: string
   dish_price: number
+  dish_qty: number
+  dish_subtotal: number
+}
+
+export type StageToShowType = {
+  show_user_info: boolean
+  show_table_selection: boolean
+  show_order_selection: boolean
+  show_booking_summary: boolean
+}
+
+export type BookingType = {
+  booking_id: string
+  user_id: string
+  table_id: number
+  order_id: number
 }

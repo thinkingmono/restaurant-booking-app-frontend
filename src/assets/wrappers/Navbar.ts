@@ -32,6 +32,10 @@ const Wrapper = style.nav`
     cursor: pointer;
     display: flex;
     align-items: center;
+    svg{
+      width: 2rem;
+      height: 2rem;
+    }
   }  
   .btn-container {
     position: relative;
@@ -44,7 +48,7 @@ const Wrapper = style.nav`
     position: relative;
     box-shadow: var(--shadow-2);
     margin-top: 0;
-    font-weight: 400;
+    font-weight: 500;
     text-transform: capitalize;
     .icon{
       width: 1.25rem;
