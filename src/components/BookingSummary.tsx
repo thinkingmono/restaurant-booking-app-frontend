@@ -44,7 +44,7 @@ function BookingSummary({ stageToShow, handleStageChange }: { stageToShow: Stage
       num_people: table.guests
     }))
     setTimeout(() => {
-      navigate('/');
+      navigate('/profile');
     }, 1500);
   }
 
