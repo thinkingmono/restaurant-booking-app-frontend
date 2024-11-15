@@ -95,14 +95,18 @@ const Wrapper = styled.section`
     }
   }
 
-  .table-selection-section, .table-preferences, .order-selection-section{
+  .table-selection-section, .table-filters, .order-selection-section{
     margin-bottom: 2rem;
   }
 
-  .preferences-fields-container{
+  .filters-fields-container{
     display: flex;
     flex-direction: column;
     row-gap: 0.75rem;
+    button{
+      margin-top: 2rem;
+      grid-column: 1/3;
+    }
   }
 
   .results-container{
@@ -119,8 +123,15 @@ const Wrapper = styled.section`
     transition: var(--transition);
 
     .img-container {
+      height: 200px;
       position: relative;
       overflow: hidden;
+
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover
+      }
 
       .overlay {
         position: absolute;
@@ -130,6 +141,10 @@ const Wrapper = styled.section`
         height: 100%;
         background-color: rgba(0, 0, 0, 0.35);
         z-index: 1;
+      }
+      
+      .darker{
+        background-color: rgba(0, 0, 0, 0.7);
       }
 
       .zone-tag {
@@ -368,7 +383,7 @@ const Wrapper = styled.section`
       grid-column: 1 / 3;
       grid-template-columns: repeat(2, 1fr);
     }
-    .preferences-fields-container{
+    .filters-fields-container{
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       column-gap: 1rem;
@@ -391,7 +406,7 @@ const Wrapper = styled.section`
       }
     }
 
-    .table-preferences{
+    .table-filters{
       grid-column: 1/4;
     }
 
@@ -472,11 +487,11 @@ const Wrapper = styled.section`
       gap: 1rem;
     }
 
-    .table-preferences{
+    .table-filters{
       grid-column: 1 / 2;
     }
 
-    .preferences-fields-container{
+    .filters-fields-container{
       grid-template-columns: repeat(2,1fr);
     }
 

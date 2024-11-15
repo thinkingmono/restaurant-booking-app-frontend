@@ -1,4 +1,4 @@
-type Preference = { id: string, label: string, checked: boolean };
+import { Preference } from '../utils/types';
 
 function Preferences({ preferences, setPreferences }: { preferences: Preference[], setPreferences: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
   return (

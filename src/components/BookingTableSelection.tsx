@@ -3,11 +3,12 @@ import { useState, useEffect } from "react"
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { FormRowDate, FormRowSelect, FormRowNumber, TableCard } from "./"
 import { hours } from "../utils/data"
-import { filterTables } from "../features/tables/tablesSlice"
+import { getAvailability } from "../features/tables/tablesSlice"
 import { selectTable } from "../features/table/tableSlice"
 import { useAppDispatch, useAppSelector } from "../hooks"
 import { StageToShowType } from '../utils/types'
 import { toast } from "react-toastify";
+import { formatDateToDB } from "../utils/format";
 
 
 function BookingTableSelection({ stageToShow, handleStageChange }: { stageToShow: StageToShowType, handleStageChange: (e: React.MouseEvent<HTMLButtonElement>) => void }) {
@@ -17,8 +18,8 @@ function BookingTableSelection({ stageToShow, handleStageChange }: { stageToShow
   const [notAvailable, setNotAvailable] = useState(false);
   const [tableFilters, setTableFilters] = useState({
     filter_date: moment().add(1, 'days').format("YYYY-MM-DD").toString(),
-    filter_hour: '01:00:00 p. m.',
-    filter_zone: 'General',
+    filter_hour: '04:00:00 pm',
+    filter_zone: 'Main Hall',
     guests: 2,
     status: 'Available'
   })
@@ -26,6 +27,10 @@ function BookingTableSelection({ stageToShow, handleStageChange }: { stageToShow
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setTableFilters({ ...tableFilters, [name]: value })
+  }
+
+  const getAvailableTables = () => {
+    dispatch(getAvailability({ date: formatDateToDB(tableFilters.filter_date, tableFilters.filter_hour), zone: tableFilters.filter_zone, customers_number: tableFilters.guests }));
   }
 
   const pickTable = () => {
@@ -47,8 +52,8 @@ function BookingTableSelection({ stageToShow, handleStageChange }: { stageToShow
   }
 
   useEffect(() => {
-    dispatch(filterTables({ table_filters: { ...tableFilters } }));
-  }, [tableFilters])
+    getAvailableTables();
+  }, [])
 
   useEffect(() => {
     pickTable();
@@ -62,20 +67,21 @@ function BookingTableSelection({ stageToShow, handleStageChange }: { stageToShow
           <h3>Selecciona tu mesa</h3>
           <button type="button" name='to-order-selection' onClick={checkBeforeChangeStage} className="btn btn-hipster">Siguiente <IoChevronForward /></button>
         </div>
-        <div className="table-preferences">
-          <div className="preferences-fields-container">
+        <div className="table-filters">
+          <div className="filters-fields-container">
             {/* Book Date */}
             <FormRowDate labelText='Fecha de la reserva' name='filter_date' value={tableFilters.filter_date} onChange={handleChange} min={moment().add(1, 'days').format("YYYY-MM-DD").toString()} max={moment().add(30, 'days').format("YYYY-MM-DD").toString()} />
             {/* Book Hour */}
             <FormRowSelect labelText='Hora de la reserva' name='filter_hour' value={tableFilters.filter_hour} onChange={handleChange} list={hours} />
             {/* Book Zone */}
-            <FormRowSelect labelText='Zona de la reserva' name='filter_zone' value={tableFilters.filter_zone} onChange={handleChange} list={['General', 'VIP', 'Jardín']} />
+            <FormRowSelect labelText='Zona de la reserva' name='filter_zone' value={tableFilters.filter_zone} onChange={handleChange} list={['Main Hall', 'VIP', 'Terrace', 'Garden', 'Lounge', 'Private Room']} />
             {/* Book Guest Quantity */}
             <FormRowNumber name='guests' labelText='Personas' value={tableFilters.guests} onChange={handleChange} min='2' max='10' step='2' />
+            <button type="button" className="btn btn-hipster" onClick={getAvailableTables}>Validar Disponibilidad</button>
           </div>
         </div>
         <div className="table-card-container">
-          {notAvailable ? <h4>No hay mesas disponibles con esas características. Por favor intenta de nuevo</h4> : <TableCard table={{ ...table }} />}
+          <TableCard table={{ ...table }} notAvailable={notAvailable} />
         </div>
       </section>}
     </>

@@ -5,6 +5,7 @@ import tablesReducer from './features/tables/tablesSlice'
 import dishesReducer from './features/dishes/dishesSlice'
 import orderReducer from './features/order/orderSlice'
 import bookingsReducer from './features/bookings/bookingsSlice'
+import bookingReducer from './features/booking/bookingSlice'
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     tables: tablesReducer,
     dishes: dishesReducer,
     order: orderReducer,
+    booking: bookingReducer,
     bookings: bookingsReducer
   }
 })

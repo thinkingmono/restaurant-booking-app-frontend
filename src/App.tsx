@@ -14,10 +14,11 @@ function App() {
             <SharedLayout />
           </ProtectedRoute>
         }>
-          <Route index element={<Home />} />
+          {/* <Route index element={<Home />} /> */}
+          <Route index element={<Book />} />
           <Route path='book' element={<Book />} />
-          <Route path='bookings' element={<Bookings />} />
-          <Route path='orders' element={<Orders />} />
+          {/* <Route path='bookings' element={<Bookings />} />
+          <Route path='orders' element={<Orders />} /> */}
           <Route path='profile' element={<Profile />} />
         </Route>
         <Route path='/register' element={<Register />} />

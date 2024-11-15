@@ -10,10 +10,10 @@ function BookingUserInfo({ stageToShow, handleStageChange }: { stageToShow: Stag
   const { user } = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   const [userInfo, setUserInfo] = useState({
-    name: user.name,
-    email: user.email,
-    nickname: user.nickname || '',
-    phone: user.phone || '',
+    name: user?.name!,
+    email: user?.email!,
+    nickname: user?.nickname!,
+    phone: user?.phone!,
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
@@ -21,19 +21,14 @@ function BookingUserInfo({ stageToShow, handleStageChange }: { stageToShow: Stag
     setUserInfo({ ...userInfo, [name]: value });
   }
 
-  const updateUserInformation = () => {
-    dispatch(updateUser({ ...user, ...userInfo }))
-  }
-
   const checkBeforeChangeStage = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!userInfo.name || !userInfo.email || !userInfo.phone) {
       toast.error('Por favor diligencia todos los campos');
       return;
     }
-    updateUserInformation();
+    dispatch(updateUser({ ...userInfo, preferences: [...user?.preferences!] }));
     handleStageChange(e);
   }
-
 
   return (
     <>
@@ -46,9 +41,9 @@ function BookingUserInfo({ stageToShow, handleStageChange }: { stageToShow: Stag
         </div>
         <div className="user-data-container">
           {/*Name Field*/}
-          <FormRow type='text' name='name' labelText='nombre' value={userInfo.name} onChange={handleChange} disabled={false} />
+          <FormRow type='text' name='name' labelText='nombre' value={userInfo.name || ''} onChange={handleChange} disabled={true} />
           {/*Email Field*/}
-          <FormRow type='email' name='email' value={userInfo.email} onChange={handleChange} disabled={true} />
+          <FormRow type='email' name='email' value={userInfo.email || ''} onChange={handleChange} disabled={false} />
           {/*Nick Field*/}
           <FormRow type='text' name='nickname' value={userInfo.nickname || ''} onChange={handleChange} disabled={true} />
           {/*Email Field*/}

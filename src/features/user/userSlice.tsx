@@ -1,21 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loginUserThunk, registerUserThunk, updateUserThunk, clearStoreThunk } from "./userThunk";
-import { addUserToLocalStorage, getUserFromLocalStorage } from "../../utils/localStorage";
+import { loginUserThunk, registerUserThunk, clearStoreThunk } from "./userThunk";
+import { addUserToLocalStorage, getUserFromLocalStorage, removeUserFromLocalStorage } from "../../utils/localStorage";
 import { toast } from "react-toastify";
-import { UserType } from '../../utils/types';
+import { UserType, UserUpdateType } from '../../utils/types';
+
 
 export const registerUser = createAsyncThunk('user/registerUser', registerUserThunk);
 
 export const loginUser = createAsyncThunk('user/loginUser', loginUserThunk);
-
-export const updateUser = createAsyncThunk('user/updateUser', updateUserThunk);
 
 export const clearStore = createAsyncThunk('user/clearStore', clearStoreThunk);
 
 type UserState = {
   isLoading: boolean,
   isSidebarOpen: boolean,
-  user: UserType
+  user: UserType | null;
 }
 
 const initialState: UserState = {
@@ -30,22 +29,31 @@ const userSlice = createSlice({
   reducers: {
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
-    }
+    },
+    updateUser: (state, action: PayloadAction<UserUpdateType>) => {
+      state.user = { ...state.user!, ...action.payload };
+      addUserToLocalStorage(state.user!);
+      toast.success(`Tus datos han sido actualizados con éxito`);
+    },
+    logoutUser: (state, action: PayloadAction<string>) => {
+      state.user = null;
+      state.isSidebarOpen = false;
+      removeUserFromLocalStorage();
+      if (action.payload) {
+        toast.success(action.payload);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(registerUser.fulfilled, (state, action: PayloadAction<UserState>) => {
-        const { user } = action.payload;
-        // const { user: { name, email, password, preferences } } = action.payload;
+      .addCase(registerUser.fulfilled, (state, action: PayloadAction<UserType>) => {
         state.isLoading = false;
-        // state.user = { ...state.user, name, email, password, preferences };
-        // console.log(state.user);
-        addUserToLocalStorage({ ...state.user, ...user });
-        // toast.success(`¡Hola! Bienvenido a Cima Gourmet ${state.user.name}`);
-        toast.success(`Te has registrado exitosamente`);
+        state.user = { ...state.user, ...action.payload };
+        addUserToLocalStorage(state.user);
+        toast.success(`¡Hola! Bienvenido a Cima Gourmet ${state.user.name}`);
       })
       .addCase(registerUser.rejected, (state) => {
         state.isLoading = false;
@@ -54,34 +62,19 @@ const userSlice = createSlice({
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<UserState>) => {
-        const { user } = action.payload;
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<UserType>) => {
         state.isLoading = false;
-        state.user = { ...state.user, ...user };
+        state.user = { ...state.user, ...action.payload };
         addUserToLocalStorage(state.user);
-        toast.success(`¡Hola! Bienvenido de vuelta ${user.name}`);
+        toast.success(`¡Hola! Bienvenido de vuelta ${state.user.name}`);
       })
       .addCase(loginUser.rejected, (state) => {
         state.isLoading = false;
         toast.error('Hubo un error con tu login, intenta de nuevo más tarde');
       })
-      .addCase(updateUser.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(updateUser.fulfilled, (state, action: PayloadAction<UserState>) => {
-        const { user } = action.payload;
-        state.isLoading = false;
-        state.user = { ...state.user, ...user };
-        addUserToLocalStorage(state.user);
-        toast.success(`Tus datos han sido guardados con éxito`);
-      })
-      .addCase(updateUser.rejected, (state) => {
-        state.isLoading = false;
-        toast.error('Hubo un error con la actualización de tus datos, intenta de nuevo más tarde');
-      })
   }
 })
 
-export const { toggleSidebar } = userSlice.actions;
+export const { toggleSidebar, logoutUser, updateUser } = userSlice.actions;
 
 export default userSlice.reducer;

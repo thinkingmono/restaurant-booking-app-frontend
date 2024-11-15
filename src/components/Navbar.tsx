@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { clearStore, toggleSidebar } from '../features/user/userSlice';
 import Logo from './Logo'
 import Wrapper from '../assets/wrappers/Navbar'
-// import { FaAlignLeft, FaCaretDown, FaUserCircle } from 'react-icons/fa'
-// import { FaAlignLeft } from 'react-icons/fa'
 import { IoChevronDown, IoPersonCircleOutline, IoMenuOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom'
 
@@ -25,10 +23,9 @@ function Navbar() {
           <Logo />
         </div>
         <div className="btn-container">
-          {/* <button type="button" className='btn' onClick={() => setShowLogout(!showLogout)}><FaUserCircle />{user.name}<FaCaretDown /></button> */}
-          <button type="button" className='btn btn-hipster' onClick={() => setShowLogout(!showLogout)}><IoPersonCircleOutline className='icon' />{user.name.split(' ')[0]}<IoChevronDown /></button>
+          <button type="button" className='btn btn-hipster' onClick={() => setShowLogout(!showLogout)}><IoPersonCircleOutline className='icon' />{user?.name.split(' ')[0]}<IoChevronDown /></button>
           <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
-            <span>{user.name}</span>
+            <span>{user?.name}</span>
             <Link to='/profile' className='dropdown-btn' onClick={() => setShowLogout(!showLogout)}>Perfil</Link>
             <button type="button" className='dropdown-btn' onClick={() => dispatch(clearStore('Logging out...'))}>Logout</button>
           </div>

@@ -6,11 +6,12 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Wrapper from "../assets/wrappers/RegisterPage"
-import imgBck from '../assets/images/cima-gourmet.jpg'
+import imgBck from '../assets/images/zones/cima-gourmet.jpg'
 import { preferences } from '../utils/data';
 
 
 const initialState: UserType = {
+  id: 0,
   name: '',
   email: '',
   password: '',
@@ -34,15 +35,15 @@ function Register() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { name, email, password, isMember, preferences } = values;
-    if (!email || !password || (!isMember && !name)) {
+    if (!name || !password || (!isMember && !email)) {
       toast.error('Please Fill Out All Fields');
       return;
     }
     if (isMember) {
-      dispatch(loginUser({ email, password }))
+      dispatch(loginUser({ name, password, preferences }))
       return;
     }
-    dispatch(registerUser({ name, email, password, isMember, preferences }))
+    dispatch(registerUser({ name, email, password, preferences }))
   };
 
   const toggleMember = () => {
@@ -73,9 +74,7 @@ function Register() {
   }, [user, navigate])
 
   return (
-    // <div style={{ backgroundImage: `url(${imgBck})`, backgroundPosition: 'top center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
     <Wrapper className='full-page' style={{ backgroundImage: `url(${imgBck})`, backgroundPosition: 'top center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-      {/* <div className="overlay"></div> */}
       <div className='welcome-container container'>
         <div className="welcome-card">
           <div className="info">
@@ -88,9 +87,9 @@ function Register() {
           <form className='form' onSubmit={onSubmit}>
             <h3>{values.isMember ? 'Login' : 'Register'}</h3>
 
-            {!values.isMember && !values.showPreferences && <FormRow labelText='Name' type='text' name='name' value={values.name} onChange={handleChange} />}
+            {!values.showPreferences && <FormRow labelText='Username' type='text' name='name' value={values.name} onChange={handleChange} />}
 
-            {!values.showPreferences && <FormRow labelText='Email' type='email' name='email' value={values.email} onChange={handleChange} />}
+            {!values.isMember && !values.showPreferences && <FormRow labelText='Email' type='email' name='email' value={values.email} onChange={handleChange} />}
 
             {!values.showPreferences && <FormRow labelText='Contraseña' type='password' name='password' value={values.password} onChange={handleChange} />}
 
@@ -103,11 +102,9 @@ function Register() {
             {(!values.isMember && !values.showPreferences) && <button type='button' className='btn btn-block' onClick={togglePreferences}>Siguiente</button>}
             {(!values.isMember && values.showPreferences) && <button type='button' className='btn btn-block' onClick={togglePreferences}>Atrás</button>}
 
-            {/* <button type='submit' className='btn btn-block'>{isLoading ? '...Loading' : 'Submit'}</button> */}
             {(values.isMember || values.showPreferences) && <button type='submit' className='btn btn-block'>{isLoading ? 'Loading...' : values.isMember ? 'Entrar' : 'Crear Cuenta'}</button>}
 
-            {/* {values.isMember && <button type="button" className="btn btn-block btn-hipster" onClick={() => dispatch(loginUser({ email: 'testuser@mail.com', password: 'secret' }))}>{isLoading ? '...Loading' : 'Demo'}</button>} */}
-            {values.isMember && <button type="button" className="btn btn-block btn-hipster" onClick={() => console.log('Demo')}>Demo</button>}
+            {values.isMember && <button type="button" className="btn btn-block btn-hipster" onClick={() => dispatch(loginUser({ name: 'armandocasas', password: 'secret', preferences }))}>Demo</button>}
 
             <p>
               {values.isMember ? '¿No tienes cuenta aún?' : '¿Ya tienes tu cuenta ?'}

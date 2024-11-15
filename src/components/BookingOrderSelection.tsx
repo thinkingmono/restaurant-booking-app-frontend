@@ -2,27 +2,25 @@ import { useEffect, useState } from "react";
 import { IoChevronForward, IoChevronDown, IoChevronBack } from "react-icons/io5";
 import { IoAddOutline } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { getAllCategories, filterByCategory, setActiveFilter } from '../features/dishes/dishesSlice'
+import { filterDishes, setActiveFilter, getAllDishes, setCategories, setDishTypes } from '../features/dishes/dishesSlice';
 import { addItem } from "../features/order/orderSlice";
 import { DishType, StageToShowType } from "../utils/types";
 import { toast } from "react-toastify";
 
-
 function BookingOrderSelection({ stageToShow, handleStageChange }: { stageToShow: StageToShowType, handleStageChange: (e: React.MouseEvent<HTMLButtonElement>) => void }) {
-  const { isLoadingCategories, isLoadingDishes, categories, filtered_dishes, active_filter } = useAppSelector((store) => store.dishes);
-  const { user } = useAppSelector((store) => store.user);
+  const { all_dishes, isLoadingFilters, isLoadingDishes, categories, dishTypes, filtered_dishes, active_filter } = useAppSelector((store) => store.dishes);
   const { order } = useAppSelector((store) => store.order);
   const dispatch = useAppDispatch();
+  const [showDishTypesFilters, setShowDishTypesFilters] = useState(true);
   const [showCategoryFilters, setShowCategoryFilters] = useState(true);
-  const [showPreferenceFilters, setShowPreferenceFilters] = useState(false);
 
   const handleOnClickFilter = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget as HTMLInputElement;
     let value: string = '';
     if (name === 'category') { value = e.currentTarget.dataset.category! };
-    if (name === 'preference') { value = e.currentTarget.dataset.preference! };
+    if (name === 'dish-type') { value = e.currentTarget.dataset.dish_type! };
     dispatch(setActiveFilter(value));
-    dispatch(filterByCategory(value));
+    dispatch(filterDishes({ filter: value, filter_type: name }));
   }
 
   const addDishToOrder = (dish: DishType) => {
@@ -38,12 +36,13 @@ function BookingOrderSelection({ stageToShow, handleStageChange }: { stageToShow
   }
 
   useEffect(() => {
-    dispatch(getAllCategories())
+    dispatch(getAllDishes('all'));
   }, [])
 
   useEffect(() => {
-    dispatch(filterByCategory('Pasta'));
-  }, [categories])
+    dispatch(setDishTypes());
+    dispatch(setCategories());
+  }, [all_dishes]);
 
   return (
     <>
@@ -57,21 +56,21 @@ function BookingOrderSelection({ stageToShow, handleStageChange }: { stageToShow
           <aside className="dishes-filters">
             <div className="filters-block">
               <div className="filter-section-title">
-                <button type="button" onClick={() => setShowCategoryFilters(!showCategoryFilters)} className="filters-toggle-btn"><h4>Categorías</h4>{!showCategoryFilters ? <IoChevronForward /> : <IoChevronDown />}</button>
+                <button type="button" onClick={() => setShowDishTypesFilters(!showDishTypesFilters)} className="filters-toggle-btn"><h4>Tipos</h4>{!showDishTypesFilters ? <IoChevronForward /> : <IoChevronDown />}</button>
               </div>
-              <div className={showCategoryFilters ? `categories-filters show` : `categories-filters`}>
-                {!isLoadingCategories ? categories.map((category) => {
-                  return <button type="button" name="category" key={category.category_id} className={`${active_filter === category.category_name ? 'filter-btn active' : 'filter-btn'}`} data-category={category.category_name} onClick={handleOnClickFilter}>{category.category_name}</button>
+              <div className={showDishTypesFilters ? `preferences-filters show` : `preferences-filters`}>
+                {!isLoadingFilters ? dishTypes.map((dishType) => {
+                  return <button type="button" name="dish-type" key={dishType} className={`${active_filter === dishType ? 'filter-btn active' : 'filter-btn'}`} data-dish_type={dishType} onClick={handleOnClickFilter}>{dishType}</button>
                 }) : <h4>Cargando...</h4>}
               </div>
             </div>
             <div className="filters-block">
               <div className="filter-section-title">
-                <button type="button" onClick={() => setShowPreferenceFilters(!showPreferenceFilters)} className="filters-toggle-btn"><h4>Preferencias</h4>{!showPreferenceFilters ? <IoChevronForward /> : <IoChevronDown />}</button>
+                <button type="button" onClick={() => setShowCategoryFilters(!showCategoryFilters)} className="filters-toggle-btn"><h4>Categorías</h4>{!showCategoryFilters ? <IoChevronForward /> : <IoChevronDown />}</button>
               </div>
-              <div className={showPreferenceFilters ? `preferences-filters show` : `preferences-filters`}>
-                {!isLoadingCategories ? user.preferences.map((preference) => {
-                  return <button type="button" name="preference" key={preference.id} className="filter-btn" data-preference={preference.id} onClick={handleOnClickFilter}>{preference.label}</button>
+              <div className={showCategoryFilters ? `categories-filters show` : `categories-filters`}>
+                {!isLoadingFilters ? categories.map((category) => {
+                  return <button type="button" name="category" key={category} className={`${active_filter === category ? 'filter-btn active' : 'filter-btn'}`} data-category={category} onClick={handleOnClickFilter}>{category}</button>
                 }) : <h4>Cargando...</h4>}
               </div>
             </div>
@@ -81,13 +80,13 @@ function BookingOrderSelection({ stageToShow, handleStageChange }: { stageToShow
               {!isLoadingDishes ? filtered_dishes.map((dish) => {
                 return (
                   <article key={dish.dish_id} className="dish-card">
-                    <div className="img-container" style={{ height: '200px' }}>
+                    <div className="img-container">
                       <div className="overlay"></div>
-                      <img src={dish.dish_img} alt={dish.dish_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img src={dish.dish_img} alt={dish.dishname} />
                       <button type='button' className="add-to-order-btn" onClick={() => addDishToOrder(dish)}><IoAddOutline /></button>
                     </div>
                     <div className="dish-info">
-                      <h4>{dish.dish_name}</h4>
+                      <h4>{dish.dishname}</h4>
                       <span className="dish-price">$ {dish.dish_price}</span>
                     </div>
                   </article>

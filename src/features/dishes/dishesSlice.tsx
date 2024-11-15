@@ -1,29 +1,31 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAllCategoriesThunk, filterByCategoryThunk } from "./dishesThunk";
+import { getAllDishesThunk } from "./dishesThunk";
 import { toast } from "react-toastify";
-import { DishType, CategoryType } from "../../utils/types";
+import { DishType } from "../../utils/types";
+import { dishesImgs } from "../../utils/data";
 
-export const getAllCategories = createAsyncThunk('categories/getAllCategories', getAllCategoriesThunk);
+export const getAllDishes = createAsyncThunk('dishes', getAllDishesThunk);
 
-export const filterByCategory = createAsyncThunk('dishes/getDefaultDishes', filterByCategoryThunk);
 
 type DishesState = {
-  isLoadingCategories: boolean
+  isLoadingFilters: boolean
   isLoadingDishes: boolean
   isError: boolean
-  categories: CategoryType[]
   all_dishes: DishType[]
+  categories: string[]
+  dishTypes: string[],
   active_filter: string,
   filtered_dishes: DishType[]
   featured_dishes: DishType[]
 }
 
 const initialState: DishesState = {
-  isLoadingCategories: false,
+  isLoadingFilters: false,
   isLoadingDishes: false,
   isError: false,
-  categories: [],
   all_dishes: [],
+  categories: [],
+  dishTypes: [],
   active_filter: '',
   filtered_dishes: [],
   featured_dishes: [],
@@ -35,37 +37,57 @@ export const dishesSlice = createSlice({
   reducers: {
     setActiveFilter: (state, action: PayloadAction<string>) => {
       state.active_filter = action.payload;
+    },
+    setDishTypes: (state) => {
+      const allTypes = state.all_dishes.map((dish) => dish.dish_type);
+      const uniqueTypes = Array.from(new Set(allTypes));
+      state.dishTypes = ['Todos', ...uniqueTypes.sort()];
+    },
+    setCategories: (state) => {
+      const allCategories = state.all_dishes.map((dish) => dish.restrictions);
+      const uniqueCategories = Array.from(new Set(allCategories));
+      state.categories = ['Todos', ...uniqueCategories.sort()];
+    },
+    filterDishes: (state, action: PayloadAction<{ filter: string, filter_type: string }>) => {
+      const { filter, filter_type } = action.payload;
+      let filteredDishes: DishType[] = [];
+      if (filter === 'Todos') {
+        state.filtered_dishes = [...state.all_dishes];
+      }
+      if (filter_type === 'category' && filter !== 'Todos') {
+        filteredDishes = state.all_dishes.filter((dish) => dish.restrictions === filter);
+        state.filtered_dishes = [...filteredDishes];
+      }
+      if (filter_type === 'dish-type' && filter !== 'Todos') {
+        filteredDishes = state.all_dishes.filter((dish) => dish.dish_type === filter);
+        state.filtered_dishes = [...filteredDishes];
+      }
+    },
+    clearDishesState: () => {
+      return { ...initialState };
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllCategories.pending, (state) => {
-        state.isLoadingCategories = true;
+      .addCase(getAllDishes.pending, (state) => {
+        state.isLoadingDishes = true;
       })
-      .addCase(getAllCategories.fulfilled, (state, action: PayloadAction<{ categories: CategoryType[] }>) => {
-        const { categories } = action.payload;
-        // console.log(categories);
-        state.categories = [...categories];
-        state.isLoadingCategories = false;
-      })
-      .addCase(getAllCategories.rejected, (state) => {
-        state.isLoadingCategories = false;
-        toast.error('Hubo un error consultando las categorías');
-      })
-      .addCase(filterByCategory.pending, (state) => {
-        state.isLoadingDishes = true
-      })
-      .addCase(filterByCategory.fulfilled, (state, action: PayloadAction<{ defaultDishes: DishType[] }>) => {
-        const { defaultDishes } = action.payload;
-        state.filtered_dishes = [...defaultDishes];
+      .addCase(getAllDishes.fulfilled, (state, action: PayloadAction<{ dishes: DishType[] }>) => {
+        const { dishes } = action.payload;
+        const allDishes = dishes.map((dish, index) => {
+          const img = dishesImgs[index].img;
+          return { ...dish, dish_qty: 1, restrictions: dish.restrictions.trim(), dish_img: img }
+        })
         state.isLoadingDishes = false;
+        state.all_dishes = [...allDishes];
+        state.filtered_dishes = [...allDishes];
       })
-      .addCase(filterByCategory.rejected, (state) => {
+      .addCase(getAllDishes.rejected, (state) => {
         state.isLoadingDishes = false;
-        toast.error('Hubo un error filtrando los platos');
+        toast.error('Hubo un error consultando los platos disponibles');
       })
   }
 })
 
-export const { setActiveFilter } = dishesSlice.actions;
+export const { setActiveFilter, setCategories, setDishTypes, filterDishes, clearDishesState } = dishesSlice.actions;
 export default dishesSlice.reducer;

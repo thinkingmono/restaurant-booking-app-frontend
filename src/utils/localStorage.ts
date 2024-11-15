@@ -1,7 +1,8 @@
 import { UserType } from "./types";
 
 export const addUserToLocalStorage = (user: UserType) => {
-  localStorage.setItem('user', JSON.stringify(user))
+  const { name, email, preferences, nickname, phone, location } = user;
+  localStorage.setItem('user', JSON.stringify({ name, email, preferences, nickname, phone, location }));
 }
 
 export const removeUserFromLocalStorage = () => {

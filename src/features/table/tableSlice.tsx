@@ -18,7 +18,6 @@ const initialState: TableState = {
   }
 }
 
-
 const tableSlice = createSlice({
   name: 'table',
   initialState,
@@ -26,10 +25,13 @@ const tableSlice = createSlice({
     selectTable: (state, action: PayloadAction<{ table: TableType }>) => {
       const { table } = action.payload;
       state.table = { ...table };
+    },
+    clearTable: () => {
+      return { ...initialState };
     }
   }
 
 })
 
-export const { selectTable } = tableSlice.actions;
+export const { selectTable, clearTable } = tableSlice.actions;
 export default tableSlice.reducer;

@@ -29,6 +29,7 @@ export type PreferenceType = {
 }
 
 export type UserType = {
+  id: number
   name: string
   email: string
   nickname?: string
@@ -43,8 +44,8 @@ export type UserType = {
 export type UserUpdateType = {
   name: string
   email: string
-  nickname: string
-  phone: string
+  nickname?: string
+  phone?: string
   location?: string
   preferences: PreferenceType[]
 }
@@ -56,6 +57,7 @@ export type FormRowType = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
+  default?: string
 }
 
 export type FormRowNumberType = {
@@ -86,6 +88,12 @@ export type FormRowDateType = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
+export type Preference = {
+  id: string,
+  label: string,
+  checked: boolean
+};
+
 export type CategoryType = {
   category_id: string
   category_name: string
@@ -93,9 +101,10 @@ export type CategoryType = {
 
 export type DishType = {
   dish_id: string
-  dish_name: string
+  dishname: string
   dish_img: string
-  dish_category: string
+  dish_type: string
+  restrictions: string;
   dish_price: number
   dish_qty: number
   dish_subtotal: number
@@ -110,7 +119,9 @@ export type StageToShowType = {
 
 export type BookingType = {
   booking_id: string
-  user_id: string
+  user_id: number
   table_id: number
-  order_id: number
+  order: number[]
+  date_hour: string
+  num_people: number
 }

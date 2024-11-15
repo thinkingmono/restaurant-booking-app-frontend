@@ -19,10 +19,13 @@ const bookingsSlice = createSlice({
       state.bookings.push(booking);
       toast.success('Tu orden ha sido creada exitosamente');
       localStorage.setItem('bookings', JSON.stringify(state.bookings));
+    },
+    clearBookingsState: () => {
+      return { ...initialState };
     }
   },
   extraReducers: () => { }
 })
 
-export const { addBooking } = bookingsSlice.actions;
+export const { addBooking, clearBookingsState } = bookingsSlice.actions;
 export default bookingsSlice.reducer;

@@ -12,10 +12,10 @@ function Profile() {
   const [userData, setUserData] = useState({
     name: user?.name || '',
     email: user?.email || '',
-    nickname: user?.nickname || '',
+    nickname: user?.nickname || user?.name || '',
     phone: user?.phone || '',
     location: user?.location || '',
-    preferences: [...user?.preferences]
+    preferences: [...user?.preferences!]
   })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,11 +51,11 @@ function Profile() {
         <h2>Perfíl</h2>
         <div className="profile-information">
           {/*Name Field*/}
-          <FormRow type='text' name='name' labelText='Nombre' value={userData.name} onChange={handleChange} />
+          <FormRow type='text' name='name' labelText='Nombre' value={userData.name} onChange={handleChange} disabled={true}/>
           {/*Email Field*/}
           <FormRow type='email' name='email' value={userData.email} onChange={handleChange} />
           {/*Nick Field*/}
-          <FormRow type='text' name='nickname' value={userData.nickname || ''} onChange={handleChange} />
+          <FormRow type='text' name='nickname' value={userData.nickname || ''} onChange={handleChange} disabled={true}/>
           {/*Phone Field*/}
           <FormRow type='tel' name='phone' value={userData.phone || ''} onChange={handleChange} />
           {/*Location Field*/}

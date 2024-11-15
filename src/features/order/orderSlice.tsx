@@ -11,15 +11,9 @@ type OrderState = {
   }
 }
 
-const setBookingConsecutive = () => {
-  const result = localStorage.getItem('bookings');
-  const currentBookingsQty = result ? JSON.parse(result).length : 0;
-  return currentBookingsQty;
-}
-
 const initialState: OrderState = {
   order: {
-    order_id: setBookingConsecutive(),
+    order_id: 0,
     items: [],
     total_items: 0,
     total_price: 0
@@ -49,12 +43,12 @@ const orderSlice = createSlice({
       state.order.items = [...newOrder];
       toast.success('Tu plato ha sido eliminado de la orden');
     },
-    updateOrderId: (state, action: PayloadAction<number>) => {
-      state.order.order_id = action.payload;
+    clearOrder: () => {
+      return { ...initialState };
     }
   },
   extraReducers: (builder) => { }
 })
 
-export const { addItem, deleteItem, updateOrderId } = orderSlice.actions;
+export const { addItem, deleteItem, clearOrder } = orderSlice.actions;
 export default orderSlice.reducer;
