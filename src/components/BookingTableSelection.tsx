@@ -63,9 +63,9 @@ function BookingTableSelection({ stageToShow, handleStageChange }: { stageToShow
     <>
       {stageToShow.show_table_selection && <section className="table-selection-section">
         <div className="section-title-btn-container">
-          <button type="button" name='to-user-information' onClick={handleStageChange} className="btn btn-hipster"><IoChevronBack />Atrás</button>
+          <button type="button" name='to-user-information' onClick={handleStageChange} className="btn btn-hipster"><IoChevronBack /> <span className="button-text-desktop">Atrás</span></button>
           <h3>Selecciona tu mesa</h3>
-          <button type="button" name='to-order-selection' onClick={checkBeforeChangeStage} className="btn btn-hipster">Siguiente <IoChevronForward /></button>
+          <button type="button" name='to-order-selection' onClick={checkBeforeChangeStage} className="btn btn-hipster"><span className="button-text-desktop">Siguiente</span> <IoChevronForward /></button>
         </div>
         <div className="table-filters">
           <div className="filters-fields-container">

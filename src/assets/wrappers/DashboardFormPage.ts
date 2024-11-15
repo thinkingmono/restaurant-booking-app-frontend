@@ -79,6 +79,7 @@ const Wrapper = styled.section`
     margin-bottom: 2.76rem;
     grid-column: 1 / 3;
     h3{
+      text-align: center;
       margin-bottom: 0;
     }
     .btn-container{
@@ -92,6 +93,9 @@ const Wrapper = styled.section`
       justify-content: space-between;
       align-items: center;
       column-gap: 0.5rem;
+    }
+    .button-text-desktop{
+      display: none;
     }
   }
 
@@ -264,6 +268,10 @@ const Wrapper = styled.section`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 1rem;
+    background: var(--black-2);
+    padding: 0.75rem;
+    border-radius: var(--borderRadius);
+    margin-bottom: 1rem;
     .filter-section-title{
       margin-bottom: 1.38rem;
       border-bottom: 1px dashed var(--primary-btn);
@@ -334,6 +342,9 @@ const Wrapper = styled.section`
   }
 
   .booking-summary-container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
     .user-information-container{
       background: var(--black-2);
       border-radius: var(--borderRadius);
@@ -351,7 +362,68 @@ const Wrapper = styled.section`
       border-bottom: 1px dashed var(--primary-btn);
       text-align: center;
     }
-    .order-container{
+  }
+
+  .order-container {
+    grid-column: 1 / 3;
+    // margin-top: 2rem;
+    background: var(--black-2);
+    padding: 1.5rem;
+    border-radius: var(--borderRadius);
+
+    .dishes-list {
+      display: flex;
+      flex-direction: column;
+      padding: 0 0.75rem;
+      overflow-x: scroll;
+
+      .dish-item {
+        display: grid;
+        grid-template-columns: 5rem 2fr repeat(3, 1fr) 2rem;
+        padding: 0.5rem;
+        transition: var(--transition);
+        min-width: 700px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border: 1px solid transparent;
+          border-radius: var(--borderRadius);
+          transition: var(--transition);
+        }
+
+        button {
+          background: transparent;
+          color: var(--primary-btn);
+          border: none;
+          font-size: 1rem;
+          cursor: pointer;
+          padding: 0;
+        }
+      }
+
+      .dish-item:hover {
+        background: var(--black);
+
+        img {
+          border: 1px solid var(--primary-btn);
+        }
+      }
+
+      .dishes-list-headers {
+        display: grid;
+        grid-template-columns: 5rem 2fr repeat(3, 1fr) 2rem;
+        border-bottom: 1px solid var(--black);
+        margin-bottom: 1rem;
+        padding: 0 0.5rem;
+        min-width: 700px;
+
+        p {
+          margin: 0;
+        }
+      }
+
       p{
         padding: 0.5rem;
         display: flex;
@@ -377,6 +449,11 @@ const Wrapper = styled.section`
       padding: 3% 2%;
       margin-bottom: 1.25rem;
       border: 1px dashed var(--primary-btn);
+    }
+    .section-title-btn-container{
+      .button-text-desktop{
+        display: block;
+      }
     }
 
     .results-container{
@@ -408,57 +485,6 @@ const Wrapper = styled.section`
 
     .table-filters{
       grid-column: 1/4;
-    }
-
-    .order-container{
-      grid-column: 1 / 3;
-      margin-top: 2rem;
-      background: var(--black-2);
-      padding: 1.5rem;
-      border-radius: var(--borderRadius);
-      .dishes-list{
-        display: flex;
-        flex-direction: column;
-        padding: 0 0.75rem;
-        .dish-item{
-          display: grid;
-          grid-template-columns: 5rem 2fr repeat(3, 1fr) 2rem;
-          padding: 0.5rem;
-          transition: var(--transition);
-          img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border: 1px solid transparent;
-            border-radius: var(--borderRadius);
-            transition: var(--transition);
-          }
-          button{
-            background: transparent;
-            color: var(--primary-btn);
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0;
-          }
-        }
-        .dish-item:hover{
-          background: var(--black);
-          img{
-            border: 1px solid var(--primary-btn);
-          }
-        }
-        .dishes-list-headers{
-          display: grid;
-          grid-template-columns: 5rem 2fr repeat(3, 1fr) 2rem;
-          border-bottom: 1px solid var(--black);
-          margin-bottom: 1rem;
-          padding: 0 0.5rem;
-          p{
-            margin: 0;
-          }
-        }
-      }
     }
   }
 
@@ -515,6 +541,12 @@ const Wrapper = styled.section`
       display: grid;
       grid-template-columns: repeat(2, 1fr);
     }
+
+    .order-container{
+      .dishes-list{
+        overflow-x: auto;
+      }
+    }
   }
   
   @media (min-width: 1280px){
@@ -529,9 +561,6 @@ const Wrapper = styled.section`
     .dishes-filters{
       display: flex;
       flex-direction: column;
-      background-color: var(--black-2);
-      padding: 0.75rem;
-      border-radius: var(--borderRadius);
     }
   }
   

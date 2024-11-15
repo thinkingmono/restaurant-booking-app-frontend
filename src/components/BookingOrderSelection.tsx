@@ -48,9 +48,9 @@ function BookingOrderSelection({ stageToShow, handleStageChange }: { stageToShow
     <>
       {stageToShow.show_order_selection && <section className="order-selection-section">
         <div className="section-title-btn-container">
-          <button type="button" name='to-table-selection' onClick={handleStageChange} className="btn btn-hipster"><IoChevronBack />Atrás</button>
+          <button type="button" name='to-table-selection' onClick={handleStageChange} className="btn btn-hipster"><IoChevronBack /> <span className="button-text-desktop">Atrás</span></button>
           <h3>Los platos que alegrarán tu velada</h3>
-          <button type="button" name='to-booking-summary' onClick={checkBeforeChangeStage} className="btn btn-hipster">Resumen <IoChevronForward /></button>
+          <button type="button" name='to-booking-summary' onClick={checkBeforeChangeStage} className="btn btn-hipster"><span className="button-text-desktop">Resumen</span> <IoChevronForward /></button>
         </div>
         <div className="order-selection-container">
           <aside className="dishes-filters">

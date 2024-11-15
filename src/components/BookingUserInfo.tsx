@@ -36,7 +36,7 @@ function BookingUserInfo({ stageToShow, handleStageChange }: { stageToShow: Stag
         <div className="section-title-btn-container">
           <h3>Datos de la reserva</h3>
           <div className="btn-container">
-            <button type="button" name='to-table-selection' onClick={checkBeforeChangeStage} className="btn btn-hipster">Siguiente <IoChevronForward /></button>
+            <button type="button" name='to-table-selection' onClick={checkBeforeChangeStage} className="btn btn-hipster"><span className="button-text-desktop">Siguiente</span> <IoChevronForward /></button>
           </div>
         </div>
         <div className="user-data-container">
@@ -47,7 +47,7 @@ function BookingUserInfo({ stageToShow, handleStageChange }: { stageToShow: Stag
           {/*Nick Field*/}
           <FormRow type='text' name='nickname' value={userInfo.nickname || ''} onChange={handleChange} disabled={true} />
           {/*Email Field*/}
-          <FormRow type='tel' name='phone' value={userInfo.phone || ''} onChange={handleChange} disabled={false} />
+          <FormRow type='tel' name='phone' labelText='celular' value={userInfo.phone || ''} onChange={handleChange} disabled={false} />
         </div>
       </section>}
     </>

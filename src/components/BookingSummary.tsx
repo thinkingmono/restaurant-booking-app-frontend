@@ -1,4 +1,4 @@
-import { IoChevronBack, IoCloseCircleOutline } from "react-icons/io5";
+import { IoChevronBack, IoChevronForward, IoCloseCircleOutline } from "react-icons/io5";
 import { StageToShowType } from '../utils/types'
 import TableCard from "./TableCard";
 import { useAppDispatch, useAppSelector } from "../hooks";
@@ -52,9 +52,9 @@ function BookingSummary({ stageToShow, handleStageChange }: { stageToShow: Stage
     <>
       {stageToShow.show_booking_summary && <section className="booking-summary-section">
         <div className="section-title-btn-container">
-          <button type="button" name='to-order-selection' onClick={handleStageChange} className="btn btn-hipster"><IoChevronBack />Atrás</button>
+          <button type="button" name='to-order-selection' onClick={handleStageChange} className="btn btn-hipster"><IoChevronBack /> <span className="button-text-desktop">Atrás</span></button>
           <h3>Resumen</h3>
-          <button type="submit" className="btn btn-hipster" onClick={checkBeforeChangeStage}>Reservar</button>
+          <button type="submit" className="btn btn-hipster" onClick={checkBeforeChangeStage}> <span className="button-text-desktop">Reservar</span> <IoChevronForward /></button>
         </div>
         <div className="booking-summary-container">
           <div className="user-information-container">
