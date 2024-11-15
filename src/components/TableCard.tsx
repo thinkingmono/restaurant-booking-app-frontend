@@ -4,7 +4,7 @@ import { TableType } from "../utils/types";
 import vipImg from '../assets/images/zones/cima-gourmet-vip.jpg'
 import mainHallImg from '../assets/images/zones/cima-gourmet-general.jpg'
 import gardenImg from '../assets/images/zones/cima-gourmet-jardin.jpg'
-import barraImg from '../assets/images/zones/cima-gourmet-barra.jpg'
+// import barraImg from '../assets/images/zones/cima-gourmet-barra.jpg'
 
 function TableCard({ table, notAvailable }: { table: TableType, notAvailable?: boolean }) {
   const cardImage = table.book_zone === 'VIP' ? vipImg : table.book_zone === 'Main Hall' ? mainHallImg : table.book_zone === 'Garden' ? gardenImg : mainHallImg;

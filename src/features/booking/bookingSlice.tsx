@@ -38,6 +38,7 @@ const bookingSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createBooking.fulfilled, (state, action: PayloadAction<{ status: number }>) => {
+        state.isLoading = false;
         const { status } = action.payload;
         if (status === 200) toast.success('Tu reserva ha sido creada exitósamente');
         state = { ...initialState };

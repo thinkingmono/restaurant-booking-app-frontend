@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Error, Register, ProtectedRoute } from './pages/'
-import { Book, Bookings, Home, Orders, Profile, SharedLayout } from './pages/Dashboard'
+// import { Book, Bookings, Home, Orders, Profile, SharedLayout } from './pages/Dashboard'
+import { Book, Profile, SharedLayout } from './pages/Dashboard'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css'

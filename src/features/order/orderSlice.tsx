@@ -47,7 +47,7 @@ const orderSlice = createSlice({
       return { ...initialState };
     }
   },
-  extraReducers: (builder) => { }
+  extraReducers: () => { }
 })
 
 export const { addItem, deleteItem, clearOrder } = orderSlice.actions;

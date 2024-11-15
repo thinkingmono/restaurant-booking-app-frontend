@@ -1,5 +1,6 @@
-import { IoStorefrontOutline, IoCalendarOutline, IoRestaurantOutline } from "react-icons/io5";
-import { MdOutlineTableRestaurant } from "react-icons/md";
+// import { IoStorefrontOutline, IoCalendarOutline, IoRestaurantOutline } from "react-icons/io5";
+import { IoCalendarOutline } from "react-icons/io5";
+// import { MdOutlineTableRestaurant } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 
 const links = [
